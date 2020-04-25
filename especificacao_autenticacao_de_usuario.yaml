@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Especificação autenticação de usuário
+  description: Especificação autenticação de usuário
+  contact:
+    email: suport@matheusmoreira.com
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /login:
+    post:
+      summary: Login do usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_request'
+        required: true
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/body_response'
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Password incorreto
+        "404":
+          description: Usuário não encontrado
+        "500":
+          description: Erro no servidor
+components:
+  schemas:
+    body_request:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          minimum: 1
+          type: string
+          format: email
+          example: admin
+        password:
+          minimum: 1
+          type: string
+          format: password
+          example: "123"
+    body_response:
+      required:
+      - email
+      - firstName
+      - id
+      - lastName
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+        account:
+          type: string
+          example: '{"id":1,"email":"admin@admin.com","firstName":"First","lastName":"Last"}'
