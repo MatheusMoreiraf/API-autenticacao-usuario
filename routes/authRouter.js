@@ -17,7 +17,6 @@ authRouter.route("/").post((req, resp) => {
                     AccountModel.findOne({
                         "email": req.body.email
                     }, (err, account) => {
-                        console.log(account)
                         if (err) {
                             status400(resp, err);
                         } else if (!account) {
